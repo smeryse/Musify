@@ -8,6 +8,7 @@ from pytube import YouTube
 
 from bot import bot, dp
 from database_func import is_audio_exists_in_db, add_data_to_db
+import inline_keyboard as ikb
 from youtube_func import find_on_youtube, create_url, download_audio_from_youtube
 
 
@@ -15,11 +16,12 @@ from youtube_func import find_on_youtube, create_url, download_audio_from_youtub
 @dp.message_handler(commands=['start'])
 async def cmd_start(message: types.Message):
     # отправляем приветственное сообщение
-    await message.answer("Привет! Я бот для поиска и загрузки музыки. Для поиска музыки введите название песни.")
-
+    msg = await message.answer("Привет! Я бот для поиска и загрузки музыки. Для поиска музыки введите название песни.",
+                               reply_markup=ikb.main_menu)
+    await message.delete()
 
 # Обработчик текстовых сообщений
-@dp.message_handler(content_types=['text'])
+@dp.message_handler(commands=['find'])
 async def text_handler(message: types.Message):
     # Получаем название песни от пользователя
     query = message.text.strip()
@@ -63,6 +65,9 @@ async def text_handler(message: types.Message):
 
         # Возвращаем название и исполнителя трека в качестве сообщения об успешной отправке
         await message.answer(f'Трек "{title}" от {artist} успешно отправлен.')
+
+        # удаляет сообщение пользователя
+        await message.delete()
 
         # Добавляем информацию о треке в базу данных
         add_data_to_db(message.chat.id, video_id, audio_id)
