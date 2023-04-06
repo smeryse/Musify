@@ -7,7 +7,7 @@ def find_on_youtube(track_name: str, count: int = 1) -> List[str]:
     """
     Searches for videos on YouTube with the given track name and returns the video_ids.
     """
-    results = Search(track_name)
+    results = Search(track_name + ' Official music video')
     video_ids = [video.video_id for video in results.results[:count]]
     if count == 1:
         return video_ids[0]
