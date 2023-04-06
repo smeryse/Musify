@@ -3,7 +3,7 @@ from typing import List
 from pytube import Search, YouTube
 
 
-def find_on_youtube(track_name: str, count: int = 1) -> List[str]:
+def find_on_youtube(track_name: str, count: int = 1) -> str:
     """
     Searches for videos on YouTube with the given track name and returns the video_ids.
     """
