@@ -6,9 +6,9 @@ from aiogram.types import InputFile
 from aiogram.utils.exceptions import TelegramAPIError
 from pytube import YouTube
 
-from create_bot import dp, bot
-from database_func import is_audio_exists_in_db, add_data_to_db
-from youtube_func import find_on_youtube, create_url, download_audio_from_youtube
+from create_bot import bot
+from functions.database_func import is_audio_exists_in_db, add_data_to_db
+from functions.youtube_func import find_on_youtube, create_url, download_audio_from_youtube
 
 
 # команда /start

@@ -24,7 +24,7 @@ def download_audio_from_youtube(video_id):
     audio_stream = yt.streams.filter(only_audio=True).first()
 
     # скачиваем аудио
-    audio_path = audio_stream.download(output_path=".")
+    audio_path = audio_stream.download(output_path="..")
 
     return audio_path
 
