@@ -1,8 +1,11 @@
+import asyncio
 import logging
 
-from aiogram.utils import executor
+from aiogram import Dispatcher, Bot
 
-from create_bot import dp
+from config import TELEGRAM_TOKEN
+from create_bot import dp, bot
+from handlers.handlers import router
 
 # Задаём уровень логирования
 logging.basicConfig(level=logging.INFO)
@@ -11,10 +14,24 @@ logging.basicConfig(level=logging.INFO)
 def on_startup():
     print('Бот запущен')
 
-# Регистрируем хендлеры из hendlers.py
-from handlers import handlers
 
-handlers.register_handlers(dp)
+# Запуск процесса поллинга новых апдейтов
+async def main():
+    await dp.start_polling(bot)
 
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True, on_startup=on_startup())
+
+async def main() -> None:
+    # Dispatcher is a root router
+    dp = Dispatcher()
+
+    # ... and all other routers should be attached to Dispatcher
+    dp.include_router(router)
+
+    # Initialize Bot instance with a default parse mode which will be passed to all API calls
+    bot = Bot(TELEGRAM_TOKEN, parse_mode="HTML")
+    # And the run events dispatching
+    await dp.start_polling(bot)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

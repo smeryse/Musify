@@ -2,17 +2,21 @@ from typing import List
 
 from pytube import Search, YouTube
 
+from pytube import Playlist
 
-def find_on_youtube(track_name: str, count: int = 1) -> str:
+
+def search_playlists(query):
     """
-    Searches for videos on YouTube with the given track name and returns the video_ids.
+    Функция для поиска плейлистов на YouTube.
+
+    Аргументы:
+        query (str): Поисковый запрос для поиска плейлистов.
+
+    Возвращает:
+        Список объектов pytube.Playlist, соответствующих результатам поиска.
     """
-    results = Search(track_name + ' Official music video')
-    video_ids = [video.video_id for video in results.results[:count]]
-    if count == 1:
-        return video_ids[0]
-    else:
-        return video_ids
+    search_results = Playlist.search(query)
+    return search_results
 
 
 def download_audio_from_youtube(video_id):

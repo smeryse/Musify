@@ -1,9 +1,15 @@
-from aiogram.types import ReplyKeyboardRemove, \
-    ReplyKeyboardMarkup, KeyboardButton, \
-    InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+from pytube import YouTube
 
-my_music = InlineKeyboardButton('Моя музыка', callback_data='my_music')
-find_on_name = InlineKeyboardButton('Найти', callback_data='find_on_name')
-download_by_url = InlineKeyboardButton('Скачать', callback_data='download_by_url')
 
-main_menu = InlineKeyboardMarkup().add(my_music, find_on_name, download_by_url)
+def inline_builder_from_youtube(buttons: list[YouTube]) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    for button in buttons:
+        builder.button(text=button.title,
+                       callback_data='download')
+    builder.adjust(1)
+    return builder.as_markup()
+    # Сделать callback функции для отлова этих кнопок
+    # TODO Сделать подкласс для класса поиска
+    #  https://docs.aiogram.dev/en/dev-3.x/dispatcher/filters/callback_data.html
