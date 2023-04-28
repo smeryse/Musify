@@ -5,7 +5,8 @@ from aiogram import Dispatcher, Bot
 
 from config import TELEGRAM_TOKEN
 from create_bot import dp, bot
-from handlers.handlers import router
+from handlers.callbacks import callbacks
+from handlers.handlers import main_menu
 
 # Задаём уровень логирования
 logging.basicConfig(level=logging.INFO)
@@ -21,14 +22,12 @@ async def main():
 
 
 async def main() -> None:
-    # Dispatcher is a root router
-    dp = Dispatcher()
+    from create_bot import bot, dp
 
     # ... and all other routers should be attached to Dispatcher
-    dp.include_router(router)
+    dp.include_router(main_menu)
+    dp.include_router(callbacks)
 
-    # Initialize Bot instance with a default parse mode which will be passed to all API calls
-    bot = Bot(TELEGRAM_TOKEN, parse_mode="HTML")
     # And the run events dispatching
     await dp.start_polling(bot)
 

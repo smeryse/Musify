@@ -10,8 +10,8 @@ from aiogram.types import InputFile, Message, CallbackQuery
 from pytube import YouTube
 
 from create_bot import bot
-from functions.database_func import is_audio_exists_in_db, add_data_to_db
-from functions.youtube_func import find_on_youtube, create_url, download_audio_from_youtube
+from tools.database_func import is_audio_exists_in_db, add_data_to_db
+from tools.youtube_functions import find_on_youtube, create_url, download_audio_from_youtube
 
 
 # All handlers should be attached to the Router (or Dispatcher)
